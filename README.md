@@ -8,7 +8,7 @@ murataslan@Murats-MacBook-Air subtle_helper % python3 helper.py
 
 2315
 
-Enter guess 1:brake
+Enter guess 1: brake
 
 Enter colors of guess 1: (Not in word = 0, Green = G, Yellow = Y) 00000
 
