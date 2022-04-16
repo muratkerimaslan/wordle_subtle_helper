@@ -4,7 +4,7 @@ This tool shows how many words satisfy the clues in the current wordle puzzle at
 An example run for day 260:
 
 
-murataslan@Murats-MacBook-Air subtle_helper % python3 helper.py
+murataslan@Murats-MacBook-Air subtle_helper % python3 helper_v2.py
 
 2315
 
