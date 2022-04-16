@@ -42,8 +42,6 @@ def word_obeys_rules(word,g_list,c_list,counter):
     for k,v in black_index_dict.items():
         if ( word[v] == k ):
             return False
-        elif k not in word:
-            return False
     ## basic checks are done here, now we check if a character is both green and yellow
     ## and if a character is gray while it was also green or yellow in an other place | done
     ## also these won't be super comprehensive I only take care of or 1 green and yellow
