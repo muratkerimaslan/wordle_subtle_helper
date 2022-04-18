@@ -9,12 +9,16 @@ def possible_word_finder1(all_word_list,guess_list,clue_list,counter):
     return possible_words
 
 def word_obeys_rules(word,g_list,c_list,counter):
+    word = word.strip()
+    # if word == "ample":
+    #     print("ample")
     green_index_dict = dict()
     yellow_index_dict = dict()
     black_index_dict = dict()
     blacks_list = list()
-    non_exist_list = list()
+    # non_exist_list = list() not used but could use a list like this too
     for i in range(counter):
+        
         if g_list[i] == "-1" or c_list[i] == "-1": # test
             print("ERROR in word_obeys_rules function")
             return False
@@ -22,26 +26,52 @@ def word_obeys_rules(word,g_list,c_list,counter):
             curr_guess = g_list[i] #example :  brain
             current_colors = c_list[i] # example GGYBB
 
+            cur_guess_green_index_dict = dict() ## this and the following line dict is needed in the case of
+            cur_guess_yellow_dict = dict() ## 1 green and 1 yellow color of the same letter in 1 guess
+
             for i in range(len(curr_guess)):
                 if current_colors[i] == "G":
-                    green_index_dict[i] = curr_guess[i]
+                    green_index_dict[i] = curr_guess[i] ## 2: A
+                    cur_guess_green_index_dict[i] = curr_guess[i]
                 elif current_colors[i] == "Y":
-                    yellow_index_dict[curr_guess[i]] = i
+                    yellow_index_dict[curr_guess[i]] = i ## B : 3
+                    cur_guess_yellow_dict[curr_guess[i]] = i
                 elif current_colors[i] == "0":
                     blacks_list.append(curr_guess[i])
-                    black_index_dict[curr_guess[i]] = i
-    # basic green and yellow checks
+                    black_index_dict[curr_guess[i]] = i ## B : 3
+
+            # now checking if 1 green and 1 yellow IN THE CURRENT GUESS
+            # GREEN KEY = CHAR YELLOW KEY = INDEX   A : 1   a = k, v = 1,
+            cur_guess_yellow_chars_list = list(cur_guess_yellow_dict.keys())  # 1 : j 
+            for k,v in cur_guess_green_index_dict.items():
+                if v in cur_guess_yellow_chars_list: ## and (cur_guess_yellow_dict[v] != k:)  ## awake ## aazzz
+                    word2 = word[0:k] + "9" + word[k+1:] ## remove the green letter of green index and check if there exists another of that letter
+                    if v not in word2:
+                        # if word == "ample":
+                        #     print(6)
+                        #     print(f"k : {k}  and v : {v}" )
+                        return False
+    # basic green and yellow check
     for k,v in green_index_dict.items(): # index = key, value = character;
         if ( word[k] != v ):
+            # if word == "ample":
+            #     print(1)
             return False
     for k,v in yellow_index_dict.items(): # key = character, value = index;
         if ( word[v] == k ):
+            # if word == "ample":
+            #     print(2)
             return False
         elif k not in word:
+            # if word == "ample":
+            #     print(3)
             return False
     for k,v in black_index_dict.items():
         if ( word[v] == k ):
+            # if word == "ample":
+            #     print(4)
             return False
+       
     ## basic checks are done here, now we check if a character is both green and yellow
     ## and if a character is gray while it was also green or yellow in an other place | done
     ## also these won't be super comprehensive I only take care of or 1 green and yellow
@@ -52,21 +82,20 @@ def word_obeys_rules(word,g_list,c_list,counter):
     for character in blacks_list:
         if character not in existing_characters: # 
             if character in word:
+                # if word == "ample":
+                #     print(5)
                 return False
 
 
             #non_exist_list.append(character)
 
-    # now checking if 1 green and 1 yellow
-    yellow_chars_list = list(yellow_index_dict.keys())
-    for k,v in green_index_dict.items():
-        if v in yellow_chars_list and yellow_index_dict[v] != k:
-            word2 = word[0:k] + "9" + word[k+1:]
-            if v not in word2:
-                return False
+    
+    
+   
 
 
     
+
     return True
 
 
